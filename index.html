@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SCAR STUDIO | Scarface</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Playfair+Display:ital,wght@1,700;1,900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050505;--surface:#0e0e0e;--text:#f1f1f1;--muted:#9a9a9a;--gold:#d4af37;--line:#222;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--tree:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='320' viewBox='0 0 260 320'%3E%3Cdefs%3E%3Cpath id='t' d='M50 40L85 130H15ZM50 100L95 200H5ZM50 170L100 270H0ZM44 270H56V320H44Z'/%3E%3C/defs%3E%3Cuse href='%23t'/%3E%3Cuse href='%23t' transform='translate(140 64) scale(.8)'/%3E%3C/svg%3E")}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Cairo',system-ui,sans-serif;line-height:1.9;overflow-x:hidden}
+.brand{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:900;letter-spacing:.02em;direction:ltr;unicode-bidi:isolate}
+
+/* ===== الدخول ===== */
+#intro{position:fixed;inset:0;z-index:50;background:radial-gradient(circle at 50% 40%,#1a1a1a,#000 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;text-align:center;padding:24px;clip-path:circle(150% at 50% 50%);transition:clip-path 1.4s cubic-bezier(.7,0,.2,1)}
+#intro.go{clip-path:circle(0% at 50% 50%)}
+#intro canvas{position:absolute;inset:0;width:100%;height:100%}
+#intro .wrap{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:22px}
+#intro .brand{font-size:clamp(46px,14vw,110px);background:linear-gradient(100deg,#777,#fff 40%,var(--gold) 60%,#777);-webkit-background-clip:text;background-clip:text;color:transparent;background-size:200% auto;animation:shine 3s linear infinite,rise 1.4s both}
+#intro p{color:var(--muted);letter-spacing:.3em;font-size:13px;direction:ltr;animation:rise 1.4s .5s both}
+.bar{width:min(240px,60vw);height:2px;background:var(--line);overflow:hidden;border-radius:2px}
+.bar i{display:block;height:100%;width:0;background:var(--gold);animation:load 2.2s .4s forwards}
+#enter{opacity:0;pointer-events:none;border:1px solid var(--gold);background:transparent;color:var(--gold);font:700 18px 'Cairo',sans-serif;padding:12px 44px;border-radius:40px;cursor:pointer;transition:.3s}
+#enter.show{opacity:1;pointer-events:auto;animation:rise 1s both}
+#enter:hover{background:var(--gold);color:#000;box-shadow:0 0 30px #d4af3766}
+.ring{position:absolute;width:min(380px,88vw);aspect-ratio:1;border-radius:50%;border:1px solid #d4af3744;animation:spin 14s linear infinite;z-index:1}
+.ring::after{content:"";position:absolute;top:-4px;left:50%;width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 18px var(--gold)}
+.ring.r2{width:min(500px,115vw);border-color:#ffffff14;animation-duration:24s;animation-direction:reverse}
+@keyframes shine{to{background-position:200% center}}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes load{to{width:100%}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes blink{50%{opacity:0}}
+
+/* ===== الغابة ===== */
+#forest{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+#forest::after{content:"";position:absolute;inset:0;z-index:2;background:linear-gradient(#050505b3,#0505058c 45%,#050505a6)}
+.sky{position:absolute;inset:0;background:radial-gradient(1px 1px at 20% 15%,#fff,transparent),radial-gradient(1px 1px at 60% 8%,#fff,transparent),radial-gradient(1.5px 1.5px at 80% 22%,#fff,transparent),radial-gradient(1px 1px at 35% 30%,#fff,transparent),radial-gradient(1px 1px at 90% 5%,#fff,transparent),radial-gradient(1px 1px at 8% 40%,#fff,transparent),linear-gradient(#01040a,#07130d)}
+.moon{position:absolute;top:9vh;left:12vw;width:70px;height:70px;border-radius:50%;background:#f4f0dc;box-shadow:0 0 60px 20px #f4f0dc33}
+.star{position:absolute;top:10vh;left:70vw;width:90px;height:2px;background:linear-gradient(90deg,#fff,transparent);opacity:0;animation:shoot 9s linear infinite}
+@keyframes shoot{0%{opacity:0;transform:translate(0,0) rotate(30deg)}2%{opacity:1}8%{opacity:0;transform:translate(-320px,180px) rotate(30deg)}100%{opacity:0}}
+.tl{position:absolute;left:0;right:0;bottom:0;-webkit-mask-image:var(--tree);mask-image:var(--tree);-webkit-mask-repeat:repeat-x;mask-repeat:repeat-x;-webkit-mask-size:260px 100%;mask-size:260px 100%;-webkit-mask-position:0 100%;mask-position:0 100%}
+.t1{height:64vh;background:#0e1f12;animation:pan 170s linear infinite}
+.t2{height:48vh;background:#08140b;animation:pan 95s linear infinite}
+.t3{height:34vh;background:#030804;animation:pan 52s linear infinite}
+@keyframes pan{to{-webkit-mask-position:-1040px 100%;mask-position:-1040px 100%}}
+.fog{position:absolute;left:0;bottom:6vh;width:200%;height:32vh;background:radial-gradient(ellipse at 50% 60%,#ffffff14,transparent 70%);animation:fog 40s linear infinite alternate}
+@keyframes fog{to{transform:translateX(-45%)}}
+.gr{position:absolute;left:0;right:0;bottom:0;height:12vh;background:linear-gradient(#050a06,#000)}
+.walker{position:absolute;left:0;bottom:var(--b,7vh);width:20px;height:60px;z-index:3;transform-origin:bottom;filter:drop-shadow(0 0 3px #ffffff40);animation:walk var(--t) linear var(--d) infinite}
+@keyframes walk{from{transform:translateX(-12vw) scale(var(--s))}to{transform:translateX(112vw) scale(var(--s))}}
+.walker i{position:absolute;display:block;background:#000}
+.wh{width:12px;height:12px;border-radius:50%;left:4px;top:0}
+.wb{width:14px;height:28px;border-radius:7px 7px 3px 3px;left:3px;top:13px}
+.wl{width:6px;height:22px;border-radius:3px;left:3px;top:38px;transform-origin:top;animation:step .9s ease-in-out infinite alternate}
+.wl.r{left:11px;animation-direction:alternate-reverse}
+@keyframes step{from{transform:rotate(-28deg)}to{transform:rotate(28deg)}}
+.lamp::after{content:"";position:absolute;left:18px;top:30px;width:7px;height:7px;border-radius:50%;background:#ffd76a;box-shadow:0 0 14px 6px #ffd76a88}
+.ff{position:absolute;width:4px;height:4px;border-radius:50%;background:#ffd76a;box-shadow:0 0 10px 3px #ffd76a88;z-index:3;animation:ffl var(--t) ease-in-out infinite alternate,tw 2.4s ease-in-out infinite}
+@keyframes ffl{to{transform:translate(var(--x),var(--y))}}
+@keyframes tw{50%{opacity:.2}}
+
+/* ===== الموقع ===== */
+#prog{position:fixed;top:0;right:0;height:3px;width:0;background:linear-gradient(90deg,var(--gold),#fff);z-index:40}
+#glow{position:fixed;width:340px;height:340px;border-radius:50%;background:radial-gradient(#d4af3722,transparent 70%);pointer-events:none;transform:translate(-50%,-50%);z-index:1;left:-999px}
+@media (hover:none){#glow{display:none}}
+nav{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;justify-content:center;gap:clamp(12px,4vw,30px);padding:calc(12px + env(safe-area-inset-top,0px)) 16px 12px;background:#050505d9;backdrop-filter:blur(10px);border-bottom:1px solid var(--line);font-size:15px}
+nav a{color:var(--muted);text-decoration:none;transition:.3s}
+nav a:hover{color:var(--gold)}
+main,footer{position:relative;z-index:2}
+main{max-width:920px;margin:0 auto;padding:0 20px 60px}
+.hero{min-height:88vh;padding-top:70px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:14px}
+.hero .brand{font-size:clamp(44px,13vw,96px);color:#fff;animation:glowp 3.5s ease-in-out infinite alternate}
+@keyframes glowp{from{text-shadow:0 0 10px #d4af3722}to{text-shadow:0 0 40px #d4af37aa}}
+.hero h2{color:var(--gold);font-weight:700;font-size:clamp(16px,4vw,22px);letter-spacing:.05em}
+.hero p{color:var(--muted);max-width:560px}
+.caret{display:inline-block;width:2px;height:1em;background:var(--gold);margin-inline-start:4px;vertical-align:middle;animation:blink 1s steps(2) infinite}
+.btn{display:inline-block;margin-top:10px;padding:12px 34px;border-radius:40px;background:var(--gold);color:#000;font-weight:900;text-decoration:none;transition:.3s}
+.btn:hover{transform:translateY(-3px);box-shadow:0 8px 30px #d4af3755}
+section{padding:46px 0;border-top:1px solid var(--line)}
+section h3{font-size:26px;font-weight:900;margin-bottom:14px}
+section h3 span{color:var(--gold)}
+section h3::after{content:"";display:block;height:2px;width:0;background:var(--gold);margin-top:6px;transition:width 1.2s .3s}
+section.in h3::after{width:70px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;transition:opacity .9s,transform .3s,border-color .3s}
+.card:hover{transform:translateY(-6px);border-color:var(--gold)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.card h4{color:var(--gold);margin-bottom:6px}
+.card p,section>p{color:var(--muted)}
+.steps{counter-reset:s;display:grid;gap:14px;margin-top:16px}
+.step{counter-increment:s;display:flex;gap:16px;align-items:flex-start}
+.step::before{content:counter(s);flex:none;width:42px;height:42px;border-radius:50%;border:1px solid var(--gold);color:var(--gold);display:grid;place-items:center;font-weight:900}
+.step h4{color:var(--text);margin-bottom:2px}
+.step p{color:var(--muted)}
+details{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin-top:10px}
+summary{cursor:pointer;font-weight:700;color:var(--gold)}
+details p{margin-top:8px;color:var(--muted)}
+.rv{opacity:0;transform:translateY(34px);transition:opacity .9s,transform .9s;transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none}
+footer{text-align:center;color:var(--muted);padding:30px 20px;border-top:1px solid var(--line);font-size:14px}
+</style>
+</head>
+<body>
+
+<div id="forest"><div class="sky"></div><div class="moon"></div><i class="star"></i><i class="star" style="left:35vw;animation-delay:4.5s"></i><div class="tl t1"></div><div class="tl t2"></div><div class="fog"></div><div class="tl t3"></div><div class="gr"></div>
+<div class="walker lamp" style="--s:1;--t:46s;--d:-8s;--b:7vh"><i class="wh"></i><i class="wb"></i><i class="wl"></i><i class="wl r"></i></div>
+<div class="walker" style="--s:.9;--t:52s;--d:-14s;--b:8vh"><i class="wh"></i><i class="wb"></i><i class="wl"></i><i class="wl r"></i></div>
+<div class="walker" style="--s:1.15;--t:40s;--d:-27s;--b:5vh"><i class="wh"></i><i class="wb"></i><i class="wl"></i><i class="wl r"></i></div>
+<div class="walker" style="--s:.75;--t:60s;--d:-3s;--b:9vh"><i class="wh"></i><i class="wb"></i><i class="wl"></i><i class="wl r"></i></div>
+<div class="walker lamp" style="--s:.95;--t:56s;--d:-35s;--b:6vh"><i class="wh"></i><i class="wb"></i><i class="wl"></i><i class="wl r"></i></div>
+</div>
+<div id="prog"></div><div id="glow"></div>
+
+<div id="intro">
+  <canvas id="pc"></canvas>
+  <div class="ring"></div><div class="ring r2"></div>
+  <div class="wrap">
+    <div class="brand">Scarface</div>
+    <p>SCAR STUDIO · OFFICIAL WEBSITE</p>
+    <div class="bar"><i></i></div>
+    <button id="enter" type="button">ادخل الموقع</button>
+  </div>
+</div>
+
+<nav><a href="#about">عني</a><a href="#server">السيرفر</a><a href="#process">طريقة الشغل</a><a href="#contact">تواصل</a></nav>
+<main>
+  <div class="hero">
+    <div class="brand">Scarface</div>
+    <h2><span id="typed">مؤسس SCAR STUDIO</span><b class="caret"></b></h2>
+    <p>مبرمج ومصمم. نبني مواقع وبوتات وتصاميم بشكل احترافي.</p>
+    <a class="btn" href="#server">انضم للسيرفر</a>
+  </div>
+
+  <section id="about" class="rv">
+    <h3><span>|</span> عني</h3>
+    <p>أنا Scarface، أشتغل في البرمجة والتصميم. اكتب هنا نبذة عنك: عمرك، بلدك، خبراتك، وكم لك في المجال.</p>
+    <div class="grid" style="margin-top:16px">
+      <div class="card rv" style="--d:.1s"><h4>البرمجة</h4><p>مواقع، بوتات ديسكورد، وأدوات.</p></div>
+      <div class="card rv" style="--d:.25s"><h4>التصميم</h4><p>شعارات، بنرات، وهويات بصرية.</p></div>
+      <div class="card rv" style="--d:.4s"><h4>الجودة</h4><p>شغل مرتب وتسليم في الوقت.</p></div>
+    </div>
+  </section>
+
+  <section id="server" class="rv">
+    <h3><span>|</span> سيرفر <span class="brand" style="font-size:28px">SCAR STUDIO</span></h3>
+    <p>مجتمع للمبرمجين والمصممين، فيه رومات منظمة بالعربي والإنجليزي، ومنتديات للبرمجة، ومكان لعرض الأعمال وطلب المساعدة.</p>
+    <div class="grid" style="margin-top:16px">
+      <div class="card rv" style="--d:.1s"><h4>منتديات البرمجة</h4><p>اسأل وشارك الأكواد.</p></div>
+      <div class="card rv" style="--d:.25s"><h4>قسم التصاميم</h4><p>اعرض أعمالك واستلم الآراء.</p></div>
+      <div class="card rv" style="--d:.4s"><h4>الإعلانات والتحديثات</h4><p>كل جديد يوصلك أول بأول.</p></div>
+    </div>
+    <p style="margin-top:20px"><a class="btn" href="https://discord.gg/XXXXXXX" target="_blank" rel="noopener">ادخل ديسكورد</a></p>
+  </section>
+
+  <section id="process" class="rv">
+    <h3><span>|</span> كيف نشتغل</h3>
+    <div class="steps">
+      <div class="step rv" style="--d:.1s"><div><h4>تواصل معنا</h4><p>اكتب لنا فكرتك وش تبي بالضبط.</p></div></div>
+      <div class="step rv" style="--d:.25s"><div><h4>نتفق على التفاصيل</h4><p>نحدد المطلوب والوقت.</p></div></div>
+      <div class="step rv" style="--d:.4s"><div><h4>التنفيذ</h4><p>نبدأ الشغل ونوريك التقدم.</p></div></div>
+      <div class="step rv" style="--d:.55s"><div><h4>التسليم</h4><p>تستلم شغلك جاهز ومرتب.</p></div></div>
+    </div>
+  </section>
+
+  <section id="faq" class="rv">
+    <h3><span>|</span> أسئلة شائعة</h3>
+    <details><summary>كيف أنضم للسيرفر؟</summary><p>اضغط زر "ادخل ديسكورد" في قسم السيرفر.</p></details>
+    <details><summary>كيف أطلب خدمة؟</summary><p>تواصل معي عبر ديسكورد أو صفحة التواصل.</p></details>
+    <details><summary>وش أنواع الخدمات؟</summary><p>برمجة (مواقع وبوتات) وتصميم (شعارات وبنرات).</p></details>
+  </section>
+
+  <section id="contact" class="rv">
+    <h3><span>|</span> تواصل معي</h3>
+    <p>للطلبات والتعاون، راسلني على ديسكورد أو عبر صفحة التواصل.</p>
+    <p style="margin-top:14px"><a class="btn" href="https://scarface-contact.netlify.app" target="_blank" rel="noopener">صفحة التواصل</a></p>
+  </section>
+</main>
+
+<footer>© 2026 <span class="brand">Scarface</span> · SCAR STUDIO</footer>
+
+<script>
+(function(){
+  var intro=document.getElementById('intro'),btn=document.getElementById('enter');
+  document.body.style.overflow='hidden';
+  setTimeout(function(){btn.classList.add('show')},2400);
+  btn.addEventListener('click',function(){
+    intro.classList.add('go');
+    document.body.style.overflow='';
+    setTimeout(function(){intro.remove()},1500);
+  });
+
+  /* ذرات الدخول */
+  var cv=document.getElementById('pc'),cx=cv.getContext('2d'),P=[],W,H;
+  function rs(){W=cv.width=innerWidth;H=cv.height=innerHeight}
+  rs();addEventListener('resize',rs);
+  for(var i=0;i<70;i++)P.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.8+.4,v:Math.random()*.5+.15,a:Math.random()*6});
+  function draw(){
+    cx.clearRect(0,0,W,H);
+    P.forEach(function(p){
+      p.y-=p.v;if(p.y<0){p.y=H;p.x=Math.random()*W}
+      p.a+=.02;cx.globalAlpha=.3+.5*Math.abs(Math.sin(p.a));
+      cx.fillStyle='#d4af37';cx.beginPath();cx.arc(p.x,p.y,p.r,0,7);cx.fill();
+    });
+    if(intro.isConnected)requestAnimationFrame(draw);
+  }
+  draw();
+
+  /* كتابة متحركة */
+  var words=['مبرمج','مصمم','مؤسس SCAR STUDIO'],wi=0,ci=0,del=false,tp=document.getElementById('typed');
+  function tick(){
+    var w=words[wi];tp.textContent=w.slice(0,ci);
+    if(!del){
+      if(ci<w.length){ci++}else{del=true;return setTimeout(tick,1400)}
+    }else{
+      if(ci>0){ci--}else{del=false;wi=(wi+1)%words.length}
+    }
+    setTimeout(tick,del?60:120);
+  }
+  tick();
+
+  /* شريط التقدم والوهج */
+  var prog=document.getElementById('prog'),glow=document.getElementById('glow');
+  addEventListener('scroll',function(){
+    var m=document.documentElement.scrollHeight-innerHeight;
+    prog.style.width=(m>0?scrollY/m*100:0)+'%';
+  },{passive:true});
+  addEventListener('mousemove',function(e){glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px'});
+
+  /* اليراعات */
+  var fb=document.getElementById('forest');
+  for(var k=0;k<26;k++){
+    var f=document.createElement('i');f.className='ff';
+    f.style.cssText='left:'+Math.random()*100+'%;top:'+(35+Math.random()*60)+'%;--x:'+(Math.random()*120-60)+'px;--y:'+(Math.random()*120-60)+'px;--t:'+(5+Math.random()*7)+'s;animation-delay:-'+Math.random()*8+'s';
+    fb.appendChild(f);
+  }
+
+  /* ميلان الكروت */
+  document.querySelectorAll('.card').forEach(function(c){
+    c.addEventListener('mousemove',function(e){
+      var r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+      c.style.transform='perspective(600px) rotateY('+x*12+'deg) rotateX('+(-y*12)+'deg) translateY(-6px)';
+    });
+    c.addEventListener('mouseleave',function(){c.style.transform=''});
+  });
+
+  /* ظهور الأقسام واحد ورا الثاني */
+  var els=document.querySelectorAll('.rv');
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+  },{threshold:.15});
+  els.forEach(function(el){io.observe(el)});
+})();
+</script>
+</body>
+</html>
